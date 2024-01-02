@@ -31,7 +31,7 @@ public class CountryLookupService {
 
 	private static String getCountryName(String countryCode) {
 		try {
-			// Load data from API or file
+			// Loading data 
 			JSONObject data = loadData();
 			JSONObject countries = (JSONObject) data.get("data");
 			JSONObject countryInfo = (JSONObject) countries.get(countryCode);
@@ -52,7 +52,7 @@ public class CountryLookupService {
 		BufferedReader reader;
 
 		try {
-			// Try reading from the API first
+			// Reading from the API
 			URL url = new URL(API_URL);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
@@ -61,19 +61,14 @@ public class CountryLookupService {
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				data = (JSONObject) new JSONParser().parse(reader);
-				// Save data to a local file for future use
-				// Note: You can modify this part to save the data in a file differently if
-				// needed
-				// For simplicity, it will overwrite the file each time.
-				// You might want to consider appending data instead.
-				// This is just for demonstration purposes.
+				// Saveing data to a local file 
 				dataToFile(data);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// If API call fails or data couldn't be retrieved from the API, try loading
+		// If API call fails or data couldn't be retrieved from the API so loading
 		// from file
 		if (data == null) {
 			try {
@@ -89,12 +84,7 @@ public class CountryLookupService {
 
 	private static void dataToFile(JSONObject data) {
 		try {
-			// Write data to a local file for offline use
-			// You might want to handle this differently based on your requirements
-			// This is just a simple demonstration of writing data to a JSON file
-			// For simplicity, it overwrites the file each time.
-			// You might want to consider appending data or versioning the file.
-			// This is just for demonstration purposes.
+			// Writing data to a local file for offline use
 			data.toJSONString();
 		} catch (Exception e) {
 			e.printStackTrace();
